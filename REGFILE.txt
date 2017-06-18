@@ -1,0 +1,115 @@
+module REGFILE(clk,ASEL,BSEL,DSEL,DIN,RIN,A,B);
+input clk;
+input [2:0] ASEL;
+input [2:0] BSEL;
+input [2:0] DSEL;
+input [7:0] DIN;
+input [7:0] RIN;
+
+output [7:0] A;
+output [7:0] B;
+
+reg [7:0] A;
+reg [7:0] B;
+
+reg [7:0] reg1;
+reg [7:0] reg2;
+reg [7:0] reg3;
+reg [7:0] reg4;
+reg [7:0] reg5;
+reg [7:0] reg6; 
+reg [7:0] reg7;
+reg [7:0][7:1] registerArray
+
+always @(posedge clk)
+	begin
+	case (DSEL)
+		3'b001 : reg1 = RIN;
+		3'b010 : reg2 = RIN;
+		3'b011 : reg3 = RIN;
+		3'b100 : reg4 = RIN;
+		3'b101 : reg5 = RIN;
+		3'b110 : reg6 = RIN;
+		3'b111 : reg7 = RIN;
+	endcase;
+end
+	
+always @(ASEL ,BSEL)
+	begin
+	case (ASEL)
+	   3'b000 : A = DIN;
+		3'b001 : A = reg1;
+		3'b010 : A = reg2;
+		3'b011 : A = reg3;
+		3'b100 : A = reg4;
+		3'b101 : A = reg5;
+		3'b110 : A = reg6;
+		3'b111 : A = reg7;
+	endcase;
+	case (BSEL)
+		3'b000 : A = DIN;
+		3'b001 : B = reg1;
+		3'b010 : B = reg2;
+		3'b011 : B = reg3;
+		3'b100 : B = reg4;
+		3'b101 : B = reg5;
+		3'b110 : B = reg6;
+		3'b111 : B = reg7;
+	endcase;
+end
+endmodule
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+module REGFILE(clk,ASEL,BSEL,DSEL,DIN,RIN,A,B);
+input clk;
+input [2:0] ASEL;
+input [2:0] BSEL;
+input [2:0] DSEL;
+input [7:0] DIN;
+input [7:0] RIN;
+
+output [7:0] A;
+output [7:0] B;
+
+reg [7:0] A;
+reg [7:0] B;
+
+
+reg [7:0][7:1] registerArray;
+
+always @(posedge clk)
+begin
+	if (DSEL == 0) begin
+	end
+	else begin
+		registerArray[DSEL] = RIN ;
+	end
+	
+   if (ASEL == 0) begin
+		A = DIN;
+	end
+	else begin
+		A = registerArray[ASEL];
+	end
+	
+	if (BSEL == 0) begin
+		B = DIN;
+	end
+	else begin
+		B = registerArray[BSEL];
+	end
+end	
+endmodule
+	
+
